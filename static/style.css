@@ -1,0 +1,26 @@
+#container{
+    display:inline-block;
+    width:30%;
+    max-height:100%; 
+    margin: 0 auto; 
+    position:relative; 
+}
+
+body {
+    text-align: center;
+    align-items: top;
+    display:grid;
+    grid-template-columns: 4fr 1fr;
+    background: #f2f6f8;
+}
+
+#target-img { 
+    width:100%;
+    position:absolute;
+    z-index:1;
+}
+
+#drawings{
+    position:relative;
+    z-index:20;
+}
