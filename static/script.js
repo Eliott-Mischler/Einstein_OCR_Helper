@@ -16,14 +16,14 @@ let inner = 0;
 let shapes = []
 var topMap = new Image()
 
-let image_width_fract = 0.4
+let image_width_fract = 0.7
 
 
 window.onload = () => {
     
-    topMap.src = "/static/img1.png"
+    topMap.src = "/static/img2.png"
     topMap.onload = () => {
-        canvas.width = image_width_fract * window.innerWidth;
+        canvas.width = Math.min(image_width_fract * window.innerWidth, 1000, topMap.naturalWidth) ;
         canvas.height = (topMap.naturalHeight / topMap.naturalWidth) * canvas.width 
         context = canvas.getContext('2d')
         context.drawImage(topMap, 0, 0, canvas.width, canvas.height)
@@ -125,12 +125,14 @@ button.addEventListener("click", function() {
 
 scrap.addEventListener("click", function() {
     rectangles = [];
+    coords = [];
     for(let i = 0; i < max; i++){
         context.undo();
         }
 })
 
 undo.addEventListener("click", function() {
+    coords = [];
     redo_stack.push(rectangles.pop())
     context.undo()
     
