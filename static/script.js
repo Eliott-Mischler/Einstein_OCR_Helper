@@ -1,6 +1,7 @@
-
 let button = document.getElementById("draw");
 let scrap = document.getElementById("scrap");
+let undo = document.getElementById("undo");
+let redo = document.getElementById("redo");
 let text = document.getElementById("text");
 let c = document.createElement('canvas');
 let canvas = document.getElementById('drawings');
@@ -9,6 +10,7 @@ let context;
 let base64 = ""
 let coords = [];
 let rectangles = [];
+let redo_stack = [];
 let max = 16;
 let inner = 0;
 let shapes = []
@@ -21,6 +23,7 @@ window.onload = () => {
         canvas.height = (topMap.naturalHeight / topMap.naturalWidth) * canvas.width 
         context = canvas.getContext('2d')
         context.drawImage(topMap, 0, 0, canvas.width, canvas.height)
+        UndoCanvas.enableUndo(context)
 
         c.height = topMap.naturalHeight;
         c.width = topMap.naturalWidth;
@@ -103,7 +106,7 @@ button.addEventListener("click", function() {
         .then(jsonData => {
             console.log(jsonData)
             receivedData = jsonData;
-            let str = "";
+            let str = "OCR Result: ";
             receivedData['data'].forEach(element => {
                 str += '\n' +  element;
             });
@@ -119,6 +122,19 @@ button.addEventListener("click", function() {
 
 scrap.addEventListener("click", function() {
     rectangles = [];
-    shapes = [];
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    for(let i = 0; i < max; i++){
+        context.undo();
+        }
+})
+
+undo.addEventListener("click", function() {
+    redo_stack.push(rectangles.pop())
+    context.undo()
+    
+})
+
+redo.addEventListener("click", function() {
+    rectangles.push(redo_stack.pop())
+    context.redo()
+    
 })
