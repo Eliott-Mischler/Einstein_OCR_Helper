@@ -1,9 +1,10 @@
-let img = document.getElementById("target-img");
+
 let button = document.getElementById("draw");
 let scrap = document.getElementById("scrap");
 let text = document.getElementById("text");
 let c = document.createElement('canvas');
 let canvas = document.getElementById('drawings');
+let container = document.getElementById('canvas-holder')
 let context;
 let base64 = ""
 let coords = [];
@@ -11,17 +12,26 @@ let rectangles = [];
 let max = 16;
 let inner = 0;
 let shapes = []
+var topMap = new Image()
 window.onload = () => {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    context = canvas.getContext('2d')
-    c.height = img.naturalHeight;
-    c.width = img.naturalWidth;
-    let ctx = c.getContext('2d');
-    ctx.drawImage(img, 0, 0, c.width, c.height)
-    base64 = c.toDataURL();
+    
+    topMap.src = "/static/img1.png"
+    topMap.onload = () => {
+        canvas.width = 0.3 * window.innerWidth;
+        canvas.height = (topMap.naturalHeight / topMap.naturalWidth) * canvas.width 
+        context = canvas.getContext('2d')
+        context.drawImage(topMap, 0, 0, canvas.width, canvas.height)
 
-    base64 = base64.substring(base64.indexOf(',')+1)
+        c.height = topMap.naturalHeight;
+        c.width = topMap.naturalWidth;
+        let ctx = c.getContext('2d');
+        ctx.drawImage(topMap, 0, 0, c.width, c.height)
+        base64 = c.toDataURL();
+        base64 = base64.substring(base64.indexOf(',')+1)
+    }
+    
+    
+
 }
 
 
@@ -29,7 +39,7 @@ window.onload = () => {
 
 
 drawings.addEventListener("click", function(e) {
-    let bounds = img.getBoundingClientRect();
+    let bounds = drawings.getBoundingClientRect();
     let left = bounds.left;
     let top = bounds.top;
 
@@ -37,11 +47,11 @@ drawings.addEventListener("click", function(e) {
     let yClick = e.pageY - top - window.scrollY;
    
 
-    let clientWidth = img.clientWidth;
-    let clientHeight = img.clientHeight;
+    let clientWidth = drawings.clientWidth;
+    let clientHeight = drawings.clientHeight;
 
-    let imageWidth = img.naturalWidth;
-    let imageHeight = img.naturalHeight;
+    let imageWidth = topMap.naturalWidth;
+    let imageHeight = topMap.naturalHeight;
     
     let pixelX = Math.round((xClick / clientWidth) * imageWidth);
     let pixelY = Math.round((yClick / clientHeight) * imageHeight); 
