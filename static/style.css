@@ -1,9 +1,8 @@
 #container{
-    display:inline-block;
-    width:30%;
-    max-height:100%; 
-    margin: 0 auto; 
-    position:relative; 
+    display:grid;
+    place-items: center;
+    grid-template-columns: 4fr 1fr;
+
 }
 
 
@@ -13,12 +12,6 @@ body {
     display:grid;
     grid-template-columns: 4fr 1fr;
     background: #f2f6f8;
-}
-
-#target-img { 
-    width:100%;
-    position:absolute;
-    z-index:1;
 }
 
 #drawings{

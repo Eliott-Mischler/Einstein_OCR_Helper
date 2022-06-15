@@ -15,11 +15,15 @@ let max = 16;
 let inner = 0;
 let shapes = []
 var topMap = new Image()
+
+let image_width_fract = 0.4
+
+
 window.onload = () => {
     
     topMap.src = "/static/img1.png"
     topMap.onload = () => {
-        canvas.width = 0.3 * window.innerWidth;
+        canvas.width = image_width_fract * window.innerWidth;
         canvas.height = (topMap.naturalHeight / topMap.naturalWidth) * canvas.width 
         context = canvas.getContext('2d')
         context.drawImage(topMap, 0, 0, canvas.width, canvas.height)
@@ -91,8 +95,7 @@ button.addEventListener("click", function() {
 
     let url = "http://127.0.0.1:5000/api/invoice"
     fetch(url, {
-        credentials: "same-origin",
-        mode: "same-origin",
+        mode: "cors",
         method: "post",
         headers: { "Content-Type": "application/json"},
         body: dataToSend
