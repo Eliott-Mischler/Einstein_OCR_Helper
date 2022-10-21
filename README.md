@@ -8,3 +8,5 @@ The form lets the user configure a CREATE or UPDATE statement, in a sense, you m
 You can then submit the form, which will paste a JSON String corresponding to your OCR filtering "Format". I have implemented this, but as of now I haven't been cleared to share this "confidential" code.
 
 However, looking at the JSON, you can implement your own Apex deserialization, which you then put into custom objects, and adding a Flow to the Format object, you may perform OCR on any file of the given format.
+
+If you are not using Salesforce, you can also adapt it with the code I have left in `Invoice_OCR.py` so as to use it completely standalone.
